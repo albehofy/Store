@@ -1,0 +1,41 @@
+<mat-toolbar class="max-w-xxl mx-auto border-x justify-between ">
+    <a routerLink="home" class="capitalize">store</a>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon [matBadge]="itemQuantity" [matBadgeHidden]="!itemQuantity"
+            matBadgeColor="warn">shopping_cart</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <div class="p-3 divide-y divide-solid">
+            <div class="flex justify-between pb-3 capitalize">
+                <span class="mr-16">{{itemQuantity}} Items</span>
+                <a routerLink="cart">View Cart</a>
+            </div>
+            <!-- shoping cart items -->
+            <div *ngIf="cart.items.length" class="py-3">
+                <!-- shoping cart item -->
+                <div *ngFor="let item of cart.items" class="flex justify-between mb-2 font-light">
+                    {{item.name}} x {{item.quantity}}
+                    <span class="font-bold">{{item.price| currency}}</span>
+                </div>
+            </div>
+
+
+            <!-- shoping cart total price -->
+            <div class="font-light py-3 flex justify-between capitalize">
+                total :
+                <span class="font-bold">{{getTotal(cart.items)| currency}}</span>
+            </div>
+            <!-- remove cart || checkout cart  -->
+            <div class="pt-3 flex justify-between">
+                <button (click)="onClearCart()"
+                    class="bg-rose-600 text-white rounded-full w-10 h-10 flex items-center justify-center">
+                    <mat-icon>remove_shopping_cart</mat-icon>
+                </button>
+                <button routerLink="/cart"
+                    class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center">
+                    <mat-icon>shopping_cart</mat-icon>
+                </button>
+            </div>
+        </div>
+    </mat-menu>
+</mat-toolbar>
